@@ -31,6 +31,21 @@ jobs:
   backend:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: LearnDevOps
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres -d LearnDevOps"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     steps:
       - uses: actions/checkout@v4
 
@@ -39,7 +54,17 @@ jobs:
         with:
           distribution: "temurin"
           java-version: "21"
+          cache: "maven"
 
       - name: Build Spring Boot
         working-directory: ./LearnDevOps
-        run: mvn clean install
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/LearnDevOps
+          SPRING_DATASOURCE_USERNAME: postgres
+          SPRING_DATASOURCE_PASSWORD: postgres
+          SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+          SPRING_JPA_HIBERNATE_DDL_AUTO: update
+          SPRING_JPA_SHOW_SQL: "false"
+          SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "false"
+          JWT_SECRET_KEY: abcdefghijklmnopqrstuvwxyz123456
+        run: ./mvnw -B clean verify
