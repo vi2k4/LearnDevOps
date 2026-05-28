@@ -12,7 +12,9 @@ function mergeMessages(existing = [], incoming = []) {
 
   [...existing, ...incoming].forEach((message) => {
     if (!message) return;
-    const key = message.id ?? `${message.senderId}-${message.createdAt}-${message.content}`;
+    const key =
+      message.id ??
+      `${message.senderId}-${message.createdAt}-${message.content}`;
 
     if (seen.has(key)) return;
 
@@ -69,7 +71,11 @@ export default function Layout() {
     let mounted = true;
     messageApi
       .byConversation(selectedConversation.id)
-      .then((list) => mounted && setConvMessages((current) => mergeMessages(current, list || [])))
+      .then(
+        (list) =>
+          mounted &&
+          setConvMessages((current) => mergeMessages(current, list || [])),
+      )
       .catch((err) => console.error(err));
 
     return () => {
@@ -113,7 +119,9 @@ export default function Layout() {
       <header className="border-b border-white/10 bg-slate-950/55 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-6">
-            <h1 className="text-xl font-semibold text-cyan-300">WebChat</h1>
+            <h1 className="text-xl font-semibold text-cyan-300">
+              Chat EveryWhere
+            </h1>
             <nav className="hidden md:flex items-center gap-4">
               <NavLink
                 to="/"
