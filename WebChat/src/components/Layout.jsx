@@ -120,7 +120,7 @@ export default function Layout() {
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-6">
             <h1 className="text-xl font-semibold text-cyan-300">
-              ChatEveryWhere
+              Chat EveryWhere
             </h1>
             <nav className="hidden md:flex items-center gap-4">
               <NavLink
