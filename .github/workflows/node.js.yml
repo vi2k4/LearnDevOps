@@ -67,4 +67,6 @@ jobs:
           SPRING_JPA_SHOW_SQL: "false"
           SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "false"
           JWT_SECRET_KEY: abcdefghijklmnopqrstuvwxyz123456
-        run: ./mvnw -B clean verify
+        run: |
+          chmod +x ./mvnw
+          ./mvnw -B clean verify
